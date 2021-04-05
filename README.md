@@ -3,12 +3,22 @@
 	<h3 align="center">Bucket</h3>
 	<p align="center">Consistent Hashing Package for Scalable Data Distribution.</p>
 	<p align="center">
-		<a href="http://www.javadoc.io/doc/com.clivern/bucket"><img src="http://www.javadoc.io/badge/com.clivern/bucket.svg"></a>
-		<a href="https://travis-ci.org/Clivern/Bucket"><img src="https://travis-ci.org/Clivern/Bucket.svg?branch=main"></a>
-		<a href="https://mvnrepository.com/artifact/com.clivern/bucket/0.1.0"><img src="https://img.shields.io/maven-central/v/com.clivern/bucket.svg"></a>
-		<a href="https://github.com/Clivern/Bucket/blob/main/LICENSE"><img src="https://img.shields.io/badge/LICENSE-Apache_2.0-orange.svg"></a>
+        <a href="https://github.com/Clivern/Bucket/actions/workflows/ci.yml">
+            <img src="https://github.com/Clivern/Bucket/actions/workflows/ci.yml/badge.svg">
+        </a>
+		<a href="http://www.javadoc.io/doc/com.clivern/bucket">
+            <img src="http://www.javadoc.io/badge/com.clivern/bucket.svg">
+        </a>
+		<a href="https://mvnrepository.com/artifact/com.clivern/bucket/0.1.0">
+            <img src="https://img.shields.io/maven-central/v/com.clivern/bucket.svg">
+        </a>
+		<a href="https://github.com/Clivern/Bucket/blob/main/LICENSE">
+            <img src="https://img.shields.io/badge/LICENSE-Apache_2.0-orange.svg">
+        </a>
 	</p>
 </p>
+
+Consistent Hashing was introduced in the year 1997. It’s used in Amazon’s Dynamo DB as a partitioning component. Further, open-source applications such as Apache Cassandra use it for data partitioning. In order to fully understand how it works, please [check this guide.](https://medium.datadriveninvestor.com/consistent-hashing-an-efficient-scalable-data-distribution-algorithm-a81fc5c0a6c7)
 
 
 ## Documentation
@@ -16,6 +26,7 @@
 ### Installation
 
 To add a dependency using Maven, use the following:
+
 ```xml
 <dependency>
     <groupId>com.clivern</groupId>
@@ -25,6 +36,7 @@ To add a dependency using Maven, use the following:
 ```
 
 To add a dependency using Gradle, use the following:
+
 ```java
 dependencies {
     compile 'com.clivern:bucket:0.1.0'
@@ -32,16 +44,35 @@ dependencies {
 ```
 
 To add a dependency using Scala SBT, use the following:
+
 ```java
 libraryDependencies += "com.clivern" % "bucket" % "0.1.0"
 ```
 
-
 ### Usage
 
-```java
+Here is a basic example
 
+```java
+import com.clivern.bucket.Bucket;
+import com.clivern.bucket.ServiceNode;
+
+
+ServiceNode node1 = new ServiceNode("DC1", "127.0.0.1", 8080);
+ServiceNode node2 = new ServiceNode("DC2", "127.0.0.2", 8081);
+ServiceNode node3 = new ServiceNode("DC3", "127.0.0.3", 8082);
+ServiceNode node4 = new ServiceNode("DC4", "127.0.0.4", 8084);
+ServiceNode node5 = new ServiceNode("DC5", "127.0.0.5", 8085);
+ServiceNode node6 = new ServiceNode("DC6", "127.0.0.6", 8086);
+ServiceNode node7 = new ServiceNode("DC7", "127.0.0.7", 8087);
+Bucket<ServiceNode> bucket =
+        new Bucket<>(Arrays.asList(node1, node2, node3, node4, node5, node6, node7), 10);
+
+// Get the node used for allocation
+ServiceNode node = (ServiceNode) bucket.routeNode(i.toString());
+System.out.println(node);
 ```
+
 
 ## Versioning
 
