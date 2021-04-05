@@ -1,0 +1,192 @@
+/*
+* Copyright (C) 2019 Clivern <http://clivern.com>
+*
+* Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
+* in compliance with the License. You may obtain a copy of the License at
+*
+* http://www.apache.org/licenses/LICENSE-2.0
+*
+* Unless required by applicable law or agreed to in writing, software distributed under the License
+* is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express
+* or implied. See the License for the specific language governing permissions and limitations under
+* the License.
+*/
+
+
+plugins {
+  id 'java-library'
+  id 'maven'
+  id 'jacoco'
+  id 'signing'
+  id 'com.diffplug.gradle.spotless' version '3.26.1'
+}
+
+archivesBaseName = "bucket"
+version = '0.1.0'
+
+spotless {
+  java {
+    licenseHeaderFile '.license'
+    importOrder 'java'
+    googleJavaFormat('1.1').aosp()
+    target 'src/**/*.java'
+  }
+}
+
+def isReleaseBuild() {
+  return POM_VERSION.contains("SNAPSHOT") == false
+}
+
+def getReleaseRepositoryUrl() {
+  return hasProperty('RELEASE_REPOSITORY_URL') ? RELEASE_REPOSITORY_URL
+      : "https://oss.sonatype.org/service/local/staging/deploy/maven2/"
+}
+
+def getSnapshotRepositoryUrl() {
+  return hasProperty('SNAPSHOT_REPOSITORY_URL') ? SNAPSHOT_REPOSITORY_URL
+      : "https://oss.sonatype.org/content/repositories/snapshots/"
+}
+
+def getRepositoryUsername() {
+  return hasProperty('NEXUS_USERNAME') ? NEXUS_USERNAME : ""
+}
+
+def getRepositoryPassword() {
+  return hasProperty('NEXUS_PASSWORD') ? NEXUS_PASSWORD : ""
+}
+
+afterEvaluate { project ->
+  uploadArchives {
+    repositories {
+      mavenDeployer {
+        beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
+
+        pom.groupId = POM_GROUP_ID
+        pom.artifactId = POM_ARTIFACT_ID
+        pom.version = POM_VERSION
+
+        repository(url: getReleaseRepositoryUrl()) {
+          authentication(userName: getRepositoryUsername(), password: getRepositoryPassword())
+        }
+        snapshotRepository(url: getSnapshotRepositoryUrl()) {
+          authentication(userName: getRepositoryUsername(), password: getRepositoryPassword())
+        }
+
+        pom.project {
+          groupId POM_GROUP_ID
+          artifactId POM_ARTIFACT_ID
+          version POM_VERSION
+          name POM_NAME
+          description POM_DESCRIPTION
+          url POM_URL
+          licenses {
+            license {
+              name POM_LICENSE_NAME
+              url POM_LICENSE_URL
+              distribution POM_LICENSE_DISTRIBUTION
+            }
+          }
+          developers {
+            developer {
+              id POM_DEVELOPER_ID
+              name POM_DEVELOPER_NAME
+              email POM_DEVELOPER_EMAIL
+              url POM_DEVELOPER_URL
+              roles {
+                role POM_DEVELOPER_ROLE
+              }
+            }
+          }
+          scm {
+            url POM_SCM_URL
+            connection POM_SCM_CONNECTION
+            developerConnection POM_SCM_DEVELOPER_CONNECTION
+          }
+        }
+      }
+    }
+  }
+
+  signing {
+    required { isReleaseBuild() && gradle.taskGraph.hasTask("uploadArchives") }
+    sign configurations.archives
+  }
+
+  task javadocJar(type: Jar, dependsOn: javadoc) {
+    classifier = 'javadoc'
+    from tasks.javadoc.destinationDir
+  }
+
+  task sourcesJar(type: Jar) {
+    from sourceSets.main.allSource
+    classifier = 'sources'
+  }
+  artifacts {
+    archives jar
+    archives javadocJar
+    archives sourcesJar
+  }
+}
+
+// updatePom task
+task updatePom {
+  doLast {
+    pom {
+      project {
+        groupId 'com.clivern'
+        artifactId 'bucket'
+        version '0.1.0'
+        name 'Bucket'
+        description "Consistent Hashing Package for Scalable Data Distribution"
+        url 'https://github.com/Clivern/Bucket'
+        licenses {
+          license {
+            name 'The Apache Software License, Version 2.0'
+            url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+            distribution 'repo'
+          }
+        }
+        developers {
+          developer {
+            id 'Clivern'
+            name 'Clivern'
+            email 'hello@clivern.com'
+            url 'http://clivern.com'
+            roles {
+              role 'Software Engineer'
+            }
+          }
+        }
+        scm {
+          url 'https://github.com/clivern/bucket'
+          connection 'scm:git:git://github.com/clivern/bucket.git'
+          developerConnection 'scm:git:git@github.com:clivern/bucket.git'
+        }
+      }
+    }.writeTo("bucket.pom").writeTo("bucket.xml")
+  }
+}
+
+test {
+  //we want display the following test events
+  testLogging {
+    events "PASSED", "STARTED", "FAILED", "SKIPPED"
+  }
+}
+
+repositories {
+  // Use jcenter for resolving dependencies.
+  // You can declare any Maven/Ivy/file repository here.
+  jcenter()
+  mavenCentral()
+  maven { url "https://oss.sonatype.org/content/repositories/snapshots" }
+}
+
+ext {
+  junitVersion = "4.12"
+}
+
+dependencies {
+  // Use JUnit test framework
+  testImplementation "junit:junit:$junitVersion"
+}
