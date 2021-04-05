@@ -18,7 +18,7 @@
 	</p>
 </p>
 
-Consistent Hashing was introduced in the year 1997. It’s used in Amazon’s Dynamo DB as a partitioning component. Further, open-source applications such as Apache Cassandra use it for data partitioning. In order to fully understand how it works, please [check this guide.](https://medium.datadriveninvestor.com/consistent-hashing-an-efficient-scalable-data-distribution-algorithm-a81fc5c0a6c7)
+Consistent Hashing was introduced in the year 1997. It’s used in Amazon’s Dynamo DB as a partitioning component. Further, open-source applications such as Apache Cassandra use it for data partitioning. In order to fully understand how it works, please [check this guide first.](https://medium.datadriveninvestor.com/consistent-hashing-an-efficient-scalable-data-distribution-algorithm-a81fc5c0a6c7)
 
 
 ## Documentation
