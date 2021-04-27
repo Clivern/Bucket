@@ -16,4 +16,5 @@ jobs:
         with:
           java-version: ${{ matrix.java }}
           architecture: x64
+          distribution: 'adopt'
       - run: make ci
