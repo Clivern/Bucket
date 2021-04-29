@@ -68,8 +68,8 @@ ServiceNode node7 = new ServiceNode("DC7", "127.0.0.7", 8087);
 Bucket<ServiceNode> bucket =
         new Bucket<>(Arrays.asList(node1, node2, node3, node4, node5, node6, node7), 10);
 
-// Get the node used for allocation
-ServiceNode node = (ServiceNode) bucket.routeNode(i.toString());
+// Get the node used for allocation for something with id 1
+ServiceNode node = (ServiceNode) bucket.routeNode("1");
 System.out.println(node);
 ```
 
