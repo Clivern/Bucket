@@ -183,7 +183,7 @@ repositories {
 }
 
 ext {
-  junitVersion = "4.12"
+  junitVersion = "4.13.2"
 }
 
 dependencies {
