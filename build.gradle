@@ -18,7 +18,7 @@ plugins {
   id 'maven'
   id 'jacoco'
   id 'signing'
-  id 'com.diffplug.gradle.spotless' version '3.26.1'
+  id 'com.diffplug.gradle.spotless' version '3.30.0'
 }
 
 archivesBaseName = "bucket"
