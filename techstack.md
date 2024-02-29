@@ -3,9 +3,9 @@
 ## Tech Stack
 Clivern/Bucket is built on the following main stack:
 
-- [Gradle](https://www.gradle.org/) – Java Build Tools
 - [Java](https://www.java.com) – Languages
 - [GitHub Actions](https://github.com/features/actions) – Continuous Integration
+- [Gradle](https://www.gradle.org/) – Java Build Tools
 - [Travis CI](http://travis-ci.com/) – Continuous Integration
 
 Full tech stack [here](/techstack.md)
@@ -16,9 +16,9 @@ Full tech stack [here](/techstack.md)
 ## Tech Stack
 Clivern/Bucket is built on the following main stack:
 
-- <img width='25' height='25' src='https://img.stackshare.io/service/975/gradlephant-social-black-bg.png' alt='Gradle'/> [Gradle](https://www.gradle.org/) – Java Build Tools
 - <img width='25' height='25' src='https://img.stackshare.io/service/995/K85ZWV2F.png' alt='Java'/> [Java](https://www.java.com) – Languages
 - <img width='25' height='25' src='https://img.stackshare.io/service/11563/actions.png' alt='GitHub Actions'/> [GitHub Actions](https://github.com/features/actions) – Continuous Integration
+- <img width='25' height='25' src='https://img.stackshare.io/service/975/gradlephant-social-black-bg.png' alt='Gradle'/> [Gradle](https://www.gradle.org/) – Java Build Tools
 - <img width='25' height='25' src='https://img.stackshare.io/service/460/Lu6cGu0z_400x400.png' alt='Travis CI'/> [Travis CI](http://travis-ci.com/) – Continuous Integration
 
 Full tech stack [here](/techstack.md)
@@ -30,7 +30,7 @@ Full tech stack [here](/techstack.md)
 # Tech Stack File
 ![](https://img.stackshare.io/repo.svg "repo") [Clivern/Bucket](https://github.com/Clivern/Bucket)![](https://img.stackshare.io/public_badge.svg "public")
 <br/><br/>
-|6<br/>Tools used|01/05/24 <br/>Report generated|
+|6<br/>Tools used|02/29/24 <br/>Report generated|
 |------|------|
 </div>
 
